@@ -1,0 +1,70 @@
+{
+    "pipeline": [
+        {
+            "type": "readers.las",
+            "tag": "snowfree"
+        },
+        {
+            "type": "filters.ferry",
+            "dimensions": "=>Classification",
+            "tag": "snowfree_ferry",
+            "inputs": ["snowfree"]
+        },
+        {
+            "type": "filters.assign",
+            "assignment": "Classification[:]=2",
+            "tag": "snowfree_classified",
+            "inputs": ["snowfree_ferry"]
+        },
+        {
+            "type": "readers.las",
+            "tag": "snowon"
+        },
+        {
+            "type": "filters.ferry",
+            "dimensions": "=>Classification",
+            "tag": "snowon_ferry",
+            "inputs": ["snowon"]
+        },
+        {
+            "type": "filters.assign",
+            "assignment": "Classification[:]=0",
+            "tag": "snowon_classified",
+            "inputs": ["snowon_ferry"]
+        },
+        {
+            "type": "filters.merge",
+            "inputs": [
+                "snowfree_classified",
+                "snowon_classified"
+            ]
+        },
+        {
+            "type": "filters.hag"
+        },
+        {
+            "type": "filters.range",
+            "limits": "Classification[0:0],HeightAboveGround[0:]"
+        },
+        {
+            "type": "filters.colorinterp",
+            "minimum": 0,
+            "maximum": 8,
+            "dimension": "HeightAboveGround"
+        },
+        {
+            "type": "filters.ferry",
+            "dimensions": "HeightAboveGround => GpsTime"
+        },
+        {
+            "type": "writers.las",
+            "dataformat_id": 3,
+            "scale_x": 0.0025,
+            "scale_y": 0.0025,
+            "scale_z": 0.0025,
+            "offset_x": "auto",
+            "offset_y": "auto",
+            "offset_z": "auto"
+        }
+    ]
+}

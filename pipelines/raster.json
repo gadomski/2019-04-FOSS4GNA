@@ -1,0 +1,18 @@
+[
+    {
+        "type": "readers.las"
+    },
+    {
+        "type": "filters.returns",
+        "groups": "last,only"
+    },
+    {
+        "type": "filters.merge"
+    },
+    {
+        "type": "writers.gdal",
+        "resolution": 0.5,
+        "output_type": "min",
+        "window_size": 2
+    }
+]

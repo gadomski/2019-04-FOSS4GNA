@@ -1,0 +1,22 @@
+{
+    "pipeline": [
+        {
+            "type": "readers.las",
+            "spatialreference": "EPSG:32613"
+        },
+        {
+            "type": "filters.returns",
+            "groups": "last,only"
+        },
+        {
+            "type": "filters.merge"
+        },
+        {
+            "type": "filters.crop"
+        },
+        {
+            "type": "writers.las",
+            "forward": "all"
+        }
+    ]
+}

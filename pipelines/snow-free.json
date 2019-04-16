@@ -1,0 +1,25 @@
+{
+    "pipeline": [
+        {
+            "type": "readers.las"
+        },
+        {
+            "type": "filters.returns",
+            "groups": "last,only"
+        },
+        {
+            "type": "filters.merge"
+        },
+        {
+            "type": "filters.crop"
+        },
+        {
+            "type": "filters.sample",
+            "radius": 0.1
+        },
+        {
+            "type": "writers.las",
+            "forward": "all"
+        }
+    ]
+}

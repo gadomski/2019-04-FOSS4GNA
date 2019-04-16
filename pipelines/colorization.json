@@ -1,0 +1,35 @@
+[
+    {
+        "type": "readers.las"
+    },
+    {
+        "type": "filters.colorization",
+        "dimensions": "GpsTime"
+    },
+    {
+        "type": "filters.python",
+        "function": "hs",
+        "script": "scripts/hs.py",
+        "module": "anything"
+    },
+    {
+        "type": "filters.range",
+        "limits": "GpsTime[0:]"
+    },
+    {
+        "type": "filters.colorinterp",
+        "minimum": 0,
+        "maximum": 7,
+        "dimension": "GpsTime"
+    },
+    {
+        "type": "writers.las",
+        "dataformat_id": 3,
+        "scale_x": 0.0025,
+        "scale_y": 0.0025,
+        "scale_z": 0.0025,
+        "offset_x": "auto",
+        "offset_y": "auto",
+        "offset_z": "auto"
+    }
+]
