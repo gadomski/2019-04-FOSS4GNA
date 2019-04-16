@@ -53,7 +53,7 @@ build/hag/2017-02-09-to-2017-02-21-SnowEx-SBB.laz: build/dhs/2017-02-21-SnowEx-S
 	pdal pipeline -v 8 $(word 3,$^) \
 		--stage.snowfree.filename=$(word 2,$^) \
 		--stage.snowon.filename=$(word 1,$^) \
-		--fiters.range.limits="Classification[0:0]" \
+		--filters.range.limits="Classification[0:0]" \
 		--filters.colorinterp.minimum=-0.5 \
 		--filters.colorinterp.maximum=0.5 \
 		--filters.colorinterp.ramp=pestel_shades \
@@ -64,6 +64,7 @@ build/raster/%.tif: laz/%.laz pipelines/raster.json
 	pdal pipeline -v 8 $(word 2,$^) \
 		--readers.las.filename=$< \
 		--writers.gdal.filename=$@
+.PRECIOUS: build/raster/%.tif
 
 build/colorization/%.laz: laz/%.laz build/raster/2016-09-28-SnowEx-SBB.tif pipelines/colorization.json
 	@mkdir -p $(dir $@)
@@ -77,7 +78,7 @@ build/colorization/2017-02-09-to-2017-02-21-SnowEx-SBB.laz: laz/2017-02-21-SnowE
 	pdal pipeline -v 8 $(word 3,$^) \
 		--readers.las.filename=$(word 1,$^) \
 		--filters.colorization.raster=$(word 2,$^) \
-		--fiters.range.limits="Classification[0:0]" \
+		--filters.range.limits="GpsTime[-0.5:0.5]" \
 		--filters.colorinterp.minimum=-0.5 \
 		--filters.colorinterp.maximum=0.5 \
 		--filters.colorinterp.ramp=pestel_shades \
@@ -102,8 +103,9 @@ build/hag-improved/2017-02-09-to-2017-02-21-SnowEx-SBB.laz: build/dhs/2017-02-21
 		--filters.hag.count=5 \
 		--filters.hag.allow_extrapolation=false \
 		--filters.hag.max_distance=2 \
-		--filters.colorinterp.minimum=-0.2 \
-		--filters.colorinterp.maximum=0.2 \
+		--filters.range.limits="Classification[0:0]" \
+		--filters.colorinterp.minimum=-0.5 \
+		--filters.colorinterp.maximum=0.5\
 		--filters.colorinterp.ramp=pestel_shades \
 		--writers.las.filename=$@
 

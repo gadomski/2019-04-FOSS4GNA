@@ -12,7 +12,7 @@
     {
         "type": "writers.gdal",
         "resolution": 0.5,
-        "output_type": "min",
+        "output_type": "idw",
         "window_size": 2
     }
 ]
