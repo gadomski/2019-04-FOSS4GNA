@@ -19,7 +19,7 @@
     {
         "type": "filters.colorinterp",
         "minimum": 0,
-        "maximum": 7,
+        "maximum": 8,
         "dimension": "GpsTime"
     },
     {
